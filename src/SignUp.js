@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import topo from './assets/img/topo.png'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useState } from 'react'
+import topo from './assets/img/devbookimg.png'
 export default function SignUp() {
     let navigate = useNavigate()
     const [name, setName] = useState("");
