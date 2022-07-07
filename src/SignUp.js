@@ -1,6 +1,31 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useState } from 'react'
 import topo from './assets/img/devbookimg.png'
 export default function SignUp() {
+    let navigate = useNavigate()
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("");
+    const [confirmsenha, setConfirmsenha] = useState("")
+    function cadastrar(){
+        const promise = axios.post('https://localhost:5000/cadastro', {
+            name: name,
+            email: email,
+            password: senha,
+            confirmPassword:confirmsenha
+        })
+        promise.catch(tratarError)
+        promise.then(tratarSucesso)
+    }
+    function tratarError(){
+        alert("Preencha os campos corretamente")
+       
+    }
+    function tratarSucesso(){
+        navigate("/signin")
+    }
     return (
         <>
             <ImgContainer>
@@ -8,14 +33,14 @@ export default function SignUp() {
             </ImgContainer>
             <Logar><h1>Cadastro</h1></Logar>
             <Form>
-                <input type='nome' placeholder="Nome" />
-                <input type='email' placeholder="E-mail" />
-                <input type='password' placeholder="Senha" />
-                <input type='password' placeholder="Confirme a senha"/>
+                <input type='nome' placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
+                <input type='email' placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)}/>
+                <input type='password' placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} />
+                <input type='password' placeholder="Confirme a senha" value = {confirmsenha} onChange={e => setConfirmsenha(e.target.value)}/>
                 <Botao>
-                    <Entrar>Cadastrar</Entrar>
+                    <Entrar onClick={cadastrar}>Cadastrar</Entrar>
                 </Botao>
-                <Cadastro >Já tem uma conta? Entre agora!</Cadastro>
+                <Cadastro onClick={() => navigate("/signin")} >Já tem uma conta? Entre agora!</Cadastro>
             </Form>
         </>
     );
