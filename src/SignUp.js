@@ -11,8 +11,9 @@ export default function SignUp() {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("");
     const [confirmsenha, setConfirmsenha] = useState("")
-    function cadastrar(){
-        const promise = axios.post('https://localhost:5000/cadastro', {
+    function cadastrar(e){
+        e.preventDefault()
+        const promise = axios.post('http://localhost:5000/cadastro', {
             name: name,
             email: email,
             password: senha,
@@ -26,7 +27,9 @@ export default function SignUp() {
        
     }
     function tratarSucesso(){
+        console.log("hello")
         navigate("/signin")
+        
     }
     return (
         <>
@@ -40,15 +43,15 @@ export default function SignUp() {
                         <input type='nome' placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
                         <input type='email' placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
                         <input type='password' placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} />
-                        <input type='confirmPassword' placeholder="Confirme a senha"value = {confirmsenha} onChange={e => setConfirmsenha(e.target.value)} />
-                        <Botao type='submit' onClick={cadastrar}>Entrar</Botao>
+                        <input type='password' placeholder="Confirme a senha"value = {confirmsenha} onChange={e => setConfirmsenha(e.target.value)} />
+                        <Botao type='submit' onClick={cadastrar}>Cadastrar</Botao>
                     </Form>
                 </Container>
                 <StyledLink to='/signin'>Já tem uma conta? Entre agora!</StyledLink>
             </Container>
     
         </>
-    );
+    );console.log(tratarSucesso)
 }
 const ImgContainer = styled.div`
     width: 100%;
@@ -114,7 +117,7 @@ const Botao = styled.button`
     background: #353535;
     border-radius: 5px;
     border: none;
-    width: 30%;
+    width: 40%;
     height: 50px;
     margin-top: 30px;
     display: flex;
