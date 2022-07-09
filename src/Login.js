@@ -6,6 +6,7 @@ import { useState } from 'react'
 import axios from 'axios';
 
 export default function Login() {
+    
     let navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -24,8 +25,8 @@ export default function Login() {
     }
 
     function tratarSucesso() {
-        console.log('birinbau')
         navigate("/")
+        
     }
     return (
         <>
