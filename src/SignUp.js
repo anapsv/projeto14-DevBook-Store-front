@@ -51,7 +51,7 @@ export default function SignUp() {
             </Container>
     
         </>
-    );console.log(tratarSucesso)
+    );
 }
 const ImgContainer = styled.div`
     width: 100%;

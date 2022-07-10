@@ -20,7 +20,7 @@ export default function Home() {
     ]);
 
     useEffect(() => {
-        const promise = axios.get('https://devbook-store.herokuapp.com/');
+        const promise = axios.get('http://localhost:5000/');
         promise
         .then((res) => {
             setBooks([]);
