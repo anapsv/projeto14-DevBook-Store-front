@@ -13,7 +13,7 @@ export default function SignUp() {
     const [confirmsenha, setConfirmsenha] = useState("")
     function cadastrar(e){
         e.preventDefault()
-        const promise = axios.post('http://localhost:5000/cadastro', {
+        const promise = axios.post('https://devbook-store.herokuapp.com/cadastro', {
             name: name,
             email: email,
             password: senha,
@@ -27,7 +27,6 @@ export default function SignUp() {
        
     }
     function tratarSucesso(){
-        console.log("hello")
         navigate("/signin")
         
     }
@@ -46,8 +45,8 @@ export default function SignUp() {
                         <input type='password' placeholder="Confirme a senha"value = {confirmsenha} onChange={e => setConfirmsenha(e.target.value)} />
                         <Botao type='submit' onClick={cadastrar}>Cadastrar</Botao>
                     </Form>
+                    <StyledLink to='/signin'>Já tem uma conta? Entre agora!</StyledLink>
                 </Container>
-                <StyledLink to='/signin'>Já tem uma conta? Entre agora!</StyledLink>
             </Container>
     
         </>
