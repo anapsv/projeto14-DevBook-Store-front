@@ -15,7 +15,7 @@ export default function Login() {
     const [senha, setSenha] = useState("");
     function logar(e) {
         e.preventDefault()
-        const promise = axios.post('http://localhost:5000/login', {
+        const promise = axios.post('https://devbook-store.herokuapp.com/login', {
             email: email,
             password: senha
         })

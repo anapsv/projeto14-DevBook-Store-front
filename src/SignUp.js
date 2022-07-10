@@ -13,7 +13,7 @@ export default function SignUp() {
     const [confirmsenha, setConfirmsenha] = useState("")
     function cadastrar(e){
         e.preventDefault()
-        const promise = axios.post('http://localhost:5000/cadastro', {
+        const promise = axios.post('https://devbook-store.herokuapp.com/cadastro', {
             name: name,
             email: email,
             password: senha,
