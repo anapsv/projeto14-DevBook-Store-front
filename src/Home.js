@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import topo from './assets/img/devbookimg.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
@@ -12,21 +12,64 @@ export default function Home() {
     // eslint-disable-next-line
     const [books, setBooks] = useState([
         {
+            _id: "ObjectId",
             image: "https://m.media-amazon.com/images/I/71dH97FwGbL._AC_UY218_.jpg",
-            title: "código limpo: Habilidades Práticas do Agile Software",
+            title: "Código Limpo: Habilidades Práticas do Agile Software",
             author: "Robert Cecil Martin",
             price: "R$ 70,00"
+        },
+        {
+            image: "https://m.media-amazon.com/images/I/81dBiDT7qTL._AC_UL320_.jpg",
+            title: "O Programador Apaixonado",
+            author: "Chad Fowler",
+            price: "R$ 45,00"
+        },
+        {
+            image: "https://m.media-amazon.com/images/I/61hewOW+8zL._AC_UL320_.jpg",
+            title: "O Programador Pragmático: De Aprendiz a mestre",
+            author: "Andy Hunt, Dave Thomas",
+            price: "R$ 135,00"
+        },
+        {
+            image: "https://m.media-amazon.com/images/I/71Vkg7GfPFL._AC_UL320_.jpg",
+            title: "Entendendo algoritmos",
+            author: "Aditya Y. Bhargava",
+            price: "R$ 45,00"
+        },
+        {
+            image: "https://m.media-amazon.com/images/I/81sTm5M7wjL._AC_UL320_.jpg",
+            title: "Refatoração: Aperfeiçoando o design de códigos existentes",
+            author: "Martin Fowler",
+            price: "R$ 94,00"
+        },
+        {
+            image: "https://m.media-amazon.com/images/I/91lBONZ4tAL._AC_UL320_.jpg",
+            title: "O Codificador Limpo",
+            author: "Andy Hunt, Dave Thomas",
+            price: "R$ 135,00"
+        },
+        {
+            image: "https://m.media-amazon.com/images/I/71RWTuYLQiL._AC_UL320_.jpg",
+            title: "Como ser um programador melhor",
+            author: "Pete Goodliffe",
+            price: "R$ 63,00"
+        },
+        {
+            image: "https://m.media-amazon.com/images/I/815d9tE7jSL._AC_UL320_.jpg",
+            title: "Arquitetura Limpa",
+            author: "Robert C. Martim",
+            price: "R$ 68,00"
         }
     ]);
 
     useEffect(() => {
-        const promise = axios.get('http://localhost:5000/');
+        const promise = axios.get('https://devbook-store.herokuapp.com/');
         promise
-        .then((res) => {
-            setBooks([]);
-            setBooks([...res.data]);
-        })
-        .catch((err) => console.log('Erro ao obter produtos', err));
+            .then((res) => {
+                setBooks([]);
+                setBooks([...res.data]);
+            })
+            .catch((err) => console.log('Erro ao obter produtos', err));
     }, []);
 
     return (
@@ -37,9 +80,13 @@ export default function Home() {
                     <ion-icon onClick={ () => setDisplay(!display) } name="person-circle-outline"></ion-icon>
                     <SideBar display={ display }>
 
-                        <p>nome do usuário</p>
                         <ion-icon onClick={ () => setDisplay(!display) } name="close-outline"></ion-icon>
-
+                        <h3>nome do usuário</h3>
+                        <Link to={ '/signin' }>Faça login</Link>
+                        <Link to={ '/signup' }>Cadastre-se</Link>
+                        <p>Acompanhe seus pedidos</p>
+                        <p>Alterar dados de cadastro</p>
+                        <p>Fale conosco</p>
                     </SideBar>
                     <ion-icon name="pause-outline" ></ion-icon>
                     <ion-icon onClick={ () => navigate('/cart') } name="cart-outline"></ion-icon>
@@ -50,7 +97,19 @@ export default function Home() {
             </ImgContainer>
             <Container>
                 <Container main >
-                    <Container line></Container>
+                    <BooksList>
+                        { books.map((obj, index) => {
+                            return (
+                                <Book key={ index } id={ obj._id } >
+                                    <Link to={ `/book/${obj._id}` }>
+                                        <img src={ obj.image } alt="book" />
+                                        <p>{ obj.title }, <span>{ obj.author }</span></p>
+                                    </Link>
+                                    <AddCart>Comprar</AddCart>
+                                </Book>
+                            );
+                        }) }
+                    </BooksList>
                 </Container>
             </Container>
         </>
@@ -68,6 +127,7 @@ const Header = styled.div`
     align-items: center;
     justify-content: space-around;
     border-radius: 0px 0px 5px 5px;
+    z-index: 1;
 
     h1 {
         font-family: 'Major Mono Display', monospace;
@@ -100,25 +160,89 @@ const ImgContainer = styled.div`
 
 const Container = styled.div`
     width: 100%;
-    height: 1500px;
+    height: 100%;
     background-color: #353535;
     display: flex;
     justify-content: center;
     align-items: center;
 
     ${props => props.main && css`
-        width: 70%;
-        height: 1500px;
+        width: 80%;
+        height: 100%;
         background-color: #FFFFFF;
-  `}
-
-  ${props => props.line && css`
-        width: 1px;
-        height: 1500px;
-        background-color: #c1c1c1;
-        margin-top: 30px;
+        padding: 0 20px 20px 20px;
   `}
 `
+
+const BooksList = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  @media (max-width: 500px) {
+    align-items: flex-start;
+  }
+`
+
+const Book = styled.div`
+    width: 300px;
+    height: 320px;
+    display: flex;
+    line-height: 25px;
+    font-family: 'Raleway';
+    border-bottom: 2px solid #c1c1c1;
+    position: relative;
+    
+    img {
+        height: 160px;
+        border-width: 8px;
+        border-style: solid;
+        border-color: #ffffff;
+        border-radius: 3px;
+        box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    p{
+        margin-top: 11px;
+        width: 50%;
+        text-align: center;
+        font-size: 20px;
+        color: #353535;
+    }
+    
+    span {
+        font-size: 16px;
+        font-weight: 700;
+        color: black;
+    }
+    
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        margin-top: 10px;
+    }
+`
+
+const AddCart = styled.button`
+    width: 300px;
+    height: 43px;
+    border-radius: 5px;
+    &hover{
+        border-radius: 0px;
+    }
+    background-color: #353535;
+    border: none;
+    font-family: 'Raleway';
+    font-size: 20px;
+    color: white;
+    position: absolute;
+    bottom: 5px;
+    left: 0px;
+`
+
 const SideBar = styled.div`
     background-color: #9b9b9b;
     position: fixed;
@@ -129,10 +253,34 @@ const SideBar = styled.div`
     z-index: 2;
     border-radius: 10px 0 0 10px;
     display: ${({ display }) => display ? "flex" : "none"};
-    padding: 6%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 6% 0 6%;
+    font-family: 'Raleway';
+
+    h3 {
+        font-size: 26px;
+        margin-top: 20px;
+    }
+
+    a {
+        font-size: 20px;
+        text-decoration: none;
+        margin-top: 40px;
+        color: #353535;
+    }
+
+    p {
+        font-size: 20px;
+        text-decoration: none;
+        margin-top: 40px;
+        color: #353535;
+    }
 
     ion-icon {
-        margin-left: 140px;
-        margin-top: 0px;
+        position: relative;
+        left: 130px;
+        top: 15px;
     }
 `
