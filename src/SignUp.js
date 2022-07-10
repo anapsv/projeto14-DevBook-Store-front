@@ -45,8 +45,8 @@ export default function SignUp() {
                         <input type='password' placeholder="Confirme a senha"value = {confirmsenha} onChange={e => setConfirmsenha(e.target.value)} />
                         <Botao type='submit' onClick={cadastrar}>Cadastrar</Botao>
                     </Form>
+                    <StyledLink to='/signin'>Já tem uma conta? Entre agora!</StyledLink>
                 </Container>
-                <StyledLink to='/signin'>Já tem uma conta? Entre agora!</StyledLink>
             </Container>
     
         </>

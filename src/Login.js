@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react'
 import axios from 'axios';
+import { useContext } from "react";
+import UserContext from "./contexts/UserContext";
 
 export default function Login() {
+    const {setUserInfo}=useContext(UserContext)
     
     let navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -24,7 +27,8 @@ export default function Login() {
         alert("Senha ou e-mail incorretos!")
     }
 
-    function tratarSucesso() {
+    function tratarSucesso(resposta) {
+        setUserInfo(resposta.data)
         navigate("/")
         
     }
@@ -41,8 +45,9 @@ export default function Login() {
                         <input type='password' placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)}/>
                         <Botao type='submit' onClick={logar}>Entrar</Botao>
                     </Form>
+                    <StyledLink to='/signup'>Primeira vez ? Cadastre-se!</StyledLink>
                 </Container>
-                <StyledLink to='/signin'>Primeira vez ? Cadastre-se!</StyledLink>
+               
             </Container>
         </>
     );
