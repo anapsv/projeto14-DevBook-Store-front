@@ -1,91 +1,143 @@
-import styled from "styled-components";
+
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useState } from 'react'
 import topo from './assets/img/devbookimg.png'
+import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
 export default function SignUp() {
+    let navigate = useNavigate()
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("");
+    const [confirmsenha, setConfirmsenha] = useState("")
+    function cadastrar(e){
+        e.preventDefault()
+        const promise = axios.post('http://localhost:5000/cadastro', {
+            name: name,
+            email: email,
+            password: senha,
+            confirmPassword:confirmsenha
+        })
+        promise.catch(tratarError)
+        promise.then(tratarSucesso)
+    }
+    function tratarError(){
+        alert("Preencha os campos corretamente")
+       
+    }
+    function tratarSucesso(){
+        console.log("hello")
+        navigate("/signin")
+        
+    }
     return (
         <>
-            <ImgContainer>
-                <img src={topo} alt='DevBook-Store' />
+                <ImgContainer>
+                <img src={ topo } alt='DevBook-Store' />
             </ImgContainer>
-            <Logar><h1>Cadastro</h1></Logar>
-            <Form>
-                <input type='nome' placeholder="Nome" />
-                <input type='email' placeholder="E-mail" />
-                <input type='password' placeholder="Senha" />
-                <input type='password' placeholder="Confirme a senha"/>
-                <Botao>
-                    <Entrar>Cadastrar</Entrar>
-                </Botao>
-                <Cadastro >Já tem uma conta? Entre agora!</Cadastro>
-            </Form>
+            <Container>
+                <Container main>
+                    <h1>Cadastro</h1>
+                    <Form>
+                        <input type='nome' placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
+                        <input type='email' placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
+                        <input type='password' placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} />
+                        <input type='password' placeholder="Confirme a senha"value = {confirmsenha} onChange={e => setConfirmsenha(e.target.value)} />
+                        <Botao type='submit' onClick={cadastrar}>Cadastrar</Botao>
+                    </Form>
+                </Container>
+                <StyledLink to='/signin'>Já tem uma conta? Entre agora!</StyledLink>
+            </Container>
+    
         </>
-    );
+    );console.log(tratarSucesso)
 }
 const ImgContainer = styled.div`
     width: 100%;
-    height: 120%;
-    background-color: #9CD8E2;
+    height: 86px;
+    background-color: #9cd8e2;
     display: flex;
     justify-content: center;
   ;
+
     img {
-        width: 306px;
-        height: 160px;
+        width: 360px;
+        height: 86px;
     }
+
 `
-const Logar = styled.div`
+const Container = styled.div`
+    width: 100%;
+    height: 1500px;
+    background-color: #353535;
     display: flex;
-    align-self: center;
-    justify-content: center;
-    h1{
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    ${props => props.main && css`
+        width: 70%;
+        height: 1500px;
+        background-color: #FFFFFF;
+  `}
+
+  h1{
         font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 40px;
-    margin-top : 80px
+        font-style: normal;
+        font-weight: 400;
+        font-size: 40px;
+        margin-top : 65px
     }
 `
+
 const Form = styled.form`
-display: flex;
-justify-content: center;
-flex-direction: column;
-margin-top: 50px;
-  input{
-width: 30%;
-height: 50px;
-align-self:center;
-border-radius: 5px;
-background: #FFFFFF;
-border: 1px solid #D5D5D5;
-font-family: 'Lexend Deca';
-font-style: normal;
-font-weight: 400;
-font-size: 19.976px;
-margin-top: 15px;
-  }
-  `
-const Botao = styled.div`
-background: #D3D3D3;
-border-radius: 5px;
-width: 30%;
-height: 50px;
-margin-top: 30px;
-align-self: center;
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 50px;
+  
+    input{
+        width: 70%;
+        height: 50px;
+        align-self:center;
+        border-radius: 5px;
+        background: #FFFFFF;
+        border: 1px solid #D5D5D5;
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19.976px;
+        margin-top: 15px;
+    }
 `
-const Entrar = styled.div`
-font-family: 'Raleway';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-color:#FFFFFF;
-margin-top: 12px;
+
+const Botao = styled.button`
+    background: #353535;
+    border-radius: 5px;
+    border: none;
+    width: 40%;
+    height: 50px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    color:#FFFFFF;
 `
-const Cadastro = styled.div`
-font-family: 'Raleway';
-font-style: normal;
-font-weight: 700;
-font-size: 18px;
-text-align: center;
-color:#000000;
-margin-top: 50px`
+
+const StyledLink = styled(Link)`
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    color: #353535;
+    margin-top: 50px
+`
