@@ -1,13 +1,15 @@
 import styled, { css } from "styled-components";
 import topo from './assets/img/devbookimg.png';
 import { useNavigate, Link } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext} from "react";
 import axios from 'axios';
+import UserContext from "./contexts/UserContext";
 
 export default function Home() {
 
     const [display, setDisplay] = useState(false);
     const navigate = useNavigate();
+    const {userInfo} = useContext(UserContext);
 
     // eslint-disable-next-line
     const [books, setBooks] = useState([
@@ -30,6 +32,20 @@ export default function Home() {
             .catch((err) => console.log('Erro ao obter produtos', err));
     }, []);
 
+    function addToCart(id){
+        let selectedBook = JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [];
+        for(let i = 0; i < books.length; i++){
+            if(id === books[i]._id){
+                selectedBook.push(books[i]);
+            }
+        }
+        let strSelectedBook = JSON.stringify(selectedBook);
+        localStorage.setItem("cart", strSelectedBook);
+        navigate('/cart');
+    };
+
+    console.log(userInfo);
+
     return (
         <>
             <Header>
@@ -39,7 +55,7 @@ export default function Home() {
                     <SideBar display={ display }>
 
                         <ion-icon onClick={ () => setDisplay(!display) } name="close-outline"></ion-icon>
-                        <h3>nome do usuário</h3>
+                        <h3>{ userInfo ? userInfo.name : ""}</h3>
                         <Link to={ '/signin' }>Faça login</Link>
                         <Link to={ '/signup' }>Cadastre-se</Link>
                         <p>Acompanhe seus pedidos</p>
@@ -61,9 +77,9 @@ export default function Home() {
                                 <Book key={ index } id={ obj._id } >
                                     <Link to={ `/book/${obj._id}` }>
                                         <img src={ obj.image } alt="book" />
-                                        <p>{ obj.title }, <span>{ obj.author }</span></p>
+                                        <p>{ obj.title }, <span>{ obj.author }<br/> {obj.price}</span></p>
                                     </Link>
-                                    <AddCart>Comprar</AddCart>
+                                    <AddCart key={index} onClick={() => addToCart(obj._id)} >Comprar</AddCart>
                                 </Book>
                             );
                         }) }

@@ -28,7 +28,11 @@ export default function Login() {
     }
 
     function tratarSucesso(resposta) {
-        setUserInfo(resposta.data)
+        setUserInfo({   
+                name: resposta.data.name,
+                token: resposta.data.token,
+        })
+        console.log(resposta.data);
         navigate("/")
         
     }

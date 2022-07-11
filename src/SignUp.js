@@ -27,6 +27,7 @@ export default function SignUp() {
        
     }
     function tratarSucesso(){
+        setName("");
         navigate("/signin")
         
     }
