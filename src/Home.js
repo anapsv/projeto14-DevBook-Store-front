@@ -41,7 +41,6 @@ export default function Home() {
         }
         let strSelectedBook = JSON.stringify(selectedBook);
         localStorage.setItem("cart", strSelectedBook);
-        navigate('/cart');
     };
 
     console.log(userInfo);

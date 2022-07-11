@@ -11,6 +11,7 @@ export default function Cart() {
     const [display, setDisplay] = useState(false);
     const navigate = useNavigate();
     const { userInfo } = useContext(UserContext);
+    
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [cep, setCep] = useState('');
@@ -20,6 +21,22 @@ export default function Cart() {
     const [cardNumber, setCardNumber] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
     const [cvv, setCvv] = useState('');
+
+    function saveShipmentInfo() {
+        let aux = {name, phone, cep, address};
+        let shipmentinfo = JSON.parse(localStorage.getItem('shipmentinfo')) ? JSON.parse(localStorage.getItem('shipmentinfo')) : [];
+        shipmentinfo.push(aux);
+        let strShipmentInfo = JSON.stringify(shipmentinfo);
+        localStorage.setItem("shipmentinfo", strShipmentInfo);
+    }
+
+    function savePaymentInfo() {
+        let aux = {nameCard, cardNumber, expirationDate, cvv};
+        let paymentinfo = JSON.parse(localStorage.getItem('paymentinfo')) ? JSON.parse(localStorage.getItem('paymentinfo')) : [];
+        paymentinfo.push(aux);
+        let strPaymentInfo = JSON.stringify(paymentinfo);
+        localStorage.setItem("paymentinfo", strPaymentInfo);
+    }
 
     return (
         <>
@@ -63,7 +80,7 @@ export default function Cart() {
                         <input type='phone' placeholder="Telefone" value={phone} onChange={e => setPhone(e.target.value)} />
                         <input type='cep' placeholder="Cep" value={cep} onChange={e => setCep(e.target.value)} />
                         <input type='address' placeholder="Endereço" value={address} onChange={e => setAddress(e.target.value)} />
-                        <button type="submit">Salvar</button>
+                        <button type="submit" onClick={() => saveShipmentInfo()}>Salvar</button>
                     </ShipmentInfo>
                     <PaymentInfo>
                         <h3>Dados de Pagamento</h3>
@@ -71,7 +88,7 @@ export default function Cart() {
                         <input type='cardNumber' placeholder="Número do cartão" value={cardNumber} onChange={e => setCardNumber(e.target.value)} />
                         <input type='expirationDate' placeholder="MM/AA" value={expirationDate} onChange={e => setExpirationDate(e.target.value)} />
                         <input type='cvv' placeholder="CVV" value={cvv} onChange={e => setCvv(e.target.value)} />
-                        <button type="submit">Salvar</button>
+                        <button type="submit" onClick={() => savePaymentInfo()}>Salvar</button>
                     </PaymentInfo>
                 </Container>
             </Container>
