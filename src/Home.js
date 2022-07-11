@@ -17,48 +17,6 @@ export default function Home() {
             title: "Código Limpo: Habilidades Práticas do Agile Software",
             author: "Robert Cecil Martin",
             price: "R$ 70,00"
-        },
-        {
-            image: "https://m.media-amazon.com/images/I/81dBiDT7qTL._AC_UL320_.jpg",
-            title: "O Programador Apaixonado",
-            author: "Chad Fowler",
-            price: "R$ 45,00"
-        },
-        {
-            image: "https://m.media-amazon.com/images/I/61hewOW+8zL._AC_UL320_.jpg",
-            title: "O Programador Pragmático: De Aprendiz a mestre",
-            author: "Andy Hunt, Dave Thomas",
-            price: "R$ 135,00"
-        },
-        {
-            image: "https://m.media-amazon.com/images/I/71Vkg7GfPFL._AC_UL320_.jpg",
-            title: "Entendendo algoritmos",
-            author: "Aditya Y. Bhargava",
-            price: "R$ 45,00"
-        },
-        {
-            image: "https://m.media-amazon.com/images/I/81sTm5M7wjL._AC_UL320_.jpg",
-            title: "Refatoração: Aperfeiçoando o design de códigos existentes",
-            author: "Martin Fowler",
-            price: "R$ 94,00"
-        },
-        {
-            image: "https://m.media-amazon.com/images/I/91lBONZ4tAL._AC_UL320_.jpg",
-            title: "O Codificador Limpo",
-            author: "Andy Hunt, Dave Thomas",
-            price: "R$ 135,00"
-        },
-        {
-            image: "https://m.media-amazon.com/images/I/71RWTuYLQiL._AC_UL320_.jpg",
-            title: "Como ser um programador melhor",
-            author: "Pete Goodliffe",
-            price: "R$ 63,00"
-        },
-        {
-            image: "https://m.media-amazon.com/images/I/815d9tE7jSL._AC_UL320_.jpg",
-            title: "Arquitetura Limpa",
-            author: "Robert C. Martim",
-            price: "R$ 68,00"
         }
     ]);
 
